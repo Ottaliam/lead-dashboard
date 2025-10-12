@@ -2108,7 +2108,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 300,
     "totalReplaced": 598,
-    "percentReplaced": 199.33333333333334,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -2240,7 +2240,7 @@ export const waterSystemsData = [
     "unknown": 208,
     "totalToReplace": 264,
     "totalReplaced": 522,
-    "percentReplaced": 197.72727272727272,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -2900,7 +2900,7 @@ export const waterSystemsData = [
     "unknown": 69,
     "totalToReplace": 126,
     "totalReplaced": 145,
-    "percentReplaced": 115.07936507936508,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3080,7 +3080,7 @@ export const waterSystemsData = [
     "unknown": 46,
     "totalToReplace": 93,
     "totalReplaced": 110,
-    "percentReplaced": 118.27956989247312,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3236,7 +3236,7 @@ export const waterSystemsData = [
     "unknown": 51,
     "totalToReplace": 79,
     "totalReplaced": 126,
-    "percentReplaced": 159.49367088607596,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3248,7 +3248,7 @@ export const waterSystemsData = [
     "unknown": 44,
     "totalToReplace": 79,
     "totalReplaced": 94,
-    "percentReplaced": 118.9873417721519,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3380,7 +3380,7 @@ export const waterSystemsData = [
     "unknown": 64,
     "totalToReplace": 64,
     "totalReplaced": 184,
-    "percentReplaced": 287.5,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3536,7 +3536,7 @@ export const waterSystemsData = [
     "unknown": 9,
     "totalToReplace": 54,
     "totalReplaced": 177,
-    "percentReplaced": 327.77777777777777,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3584,7 +3584,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 50,
     "totalReplaced": 262,
-    "percentReplaced": 524,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3728,7 +3728,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 39,
     "totalReplaced": 45,
-    "percentReplaced": 115.38461538461537,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3740,7 +3740,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 38,
     "totalReplaced": 60,
-    "percentReplaced": 157.89473684210526,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3836,7 +3836,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 32,
     "totalReplaced": 271,
-    "percentReplaced": 846.875,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3860,7 +3860,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 31,
     "totalReplaced": 160,
-    "percentReplaced": 516.1290322580645,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -3980,7 +3980,7 @@ export const waterSystemsData = [
     "unknown": 25,
     "totalToReplace": 26,
     "totalReplaced": 30,
-    "percentReplaced": 115.38461538461537,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4088,7 +4088,7 @@ export const waterSystemsData = [
     "unknown": 16,
     "totalToReplace": 16,
     "totalReplaced": 30,
-    "percentReplaced": 187.5,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4148,7 +4148,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 14,
     "totalReplaced": 34,
-    "percentReplaced": 242.85714285714283,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4172,7 +4172,7 @@ export const waterSystemsData = [
     "unknown": 4,
     "totalToReplace": 13,
     "totalReplaced": 41,
-    "percentReplaced": 315.38461538461536,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4208,7 +4208,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 11,
     "totalReplaced": 23,
-    "percentReplaced": 209.0909090909091,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4292,7 +4292,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 8,
     "totalReplaced": 70,
-    "percentReplaced": 875,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4364,7 +4364,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 7,
     "totalReplaced": 39,
-    "percentReplaced": 557.1428571428571,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4412,7 +4412,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 5,
     "totalReplaced": 9,
-    "percentReplaced": 180,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4460,7 +4460,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 4,
     "totalReplaced": 183,
-    "percentReplaced": 4575,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4484,7 +4484,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 3,
     "totalReplaced": 11,
-    "percentReplaced": 366.66666666666663,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4532,7 +4532,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 2,
     "totalReplaced": 6,
-    "percentReplaced": 300,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4544,7 +4544,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 2,
     "totalReplaced": 4,
-    "percentReplaced": 200,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4616,7 +4616,7 @@ export const waterSystemsData = [
     "unknown": 1,
     "totalToReplace": 1,
     "totalReplaced": 17,
-    "percentReplaced": 1700,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -4628,7 +4628,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 1,
     "totalReplaced": 2,
-    "percentReplaced": 200,
+    "percentReplaced": 100,
     "exceedance": "-"
   },
   {
@@ -15824,7 +15824,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 779,
     "totalReplaced": 1829,
-    "percentReplaced": 234.788189987163,
+    "percentReplaced": 100,
     "exceedance": "2023"
   },
   {
@@ -16052,7 +16052,7 @@ export const waterSystemsData = [
     "unknown": 1,
     "totalToReplace": 58,
     "totalReplaced": 102,
-    "percentReplaced": 175.86206896551724,
+    "percentReplaced": 100,
     "exceedance": "2021"
   },
   {
@@ -16184,7 +16184,7 @@ export const waterSystemsData = [
     "unknown": 125,
     "totalToReplace": 125,
     "totalReplaced": 242,
-    "percentReplaced": 193.6,
+    "percentReplaced": 100,
     "exceedance": "2020"
   },
   {
@@ -16340,7 +16340,7 @@ export const waterSystemsData = [
     "unknown": 33,
     "totalToReplace": 188,
     "totalReplaced": 530,
-    "percentReplaced": 281.9148936170213,
+    "percentReplaced": 100,
     "exceedance": "2019"
   },
   {
@@ -16364,7 +16364,7 @@ export const waterSystemsData = [
     "unknown": 0,
     "totalToReplace": 1,
     "totalReplaced": 134,
-    "percentReplaced": 13400,
+    "percentReplaced": 100,
     "exceedance": "2019"
   },
   {

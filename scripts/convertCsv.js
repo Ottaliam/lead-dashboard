@@ -15,17 +15,22 @@ const jsData = parsed.data.map(row => {
     return isNaN(num) ? 0 : num;
   };
 
+  const leadLines = clean(row['Lead in CDSMI']);
+  const gpcl = clean(row['GPCL in CDSMI']);
+  const unknown = clean(row['Unknown in CDSMI']);
+  const totalToReplace = leadLines + gpcl + unknown;
   const totalReplaced = clean(row['Grand Total of Lead Service Lines Replaced']);
-  const totalToReplace = clean(row['Total to be identified or replaced']);
-  const percentReplaced = totalToReplace > 0 ? (totalReplaced / totalToReplace) * 100 : 0;
+  
+  let percentReplaced = totalToReplace > 0 ? (totalReplaced / totalToReplace) * 100 : 0;
+  if (percentReplaced > 100) percentReplaced = 100;
 
   return {
     pwsid: (row['PWSID'] || '').trim(),
     name: (row['Supply Name'] || '').trim(),
     population: clean(row['Population Served (2025)']),
-    leadLines: clean(row['Lead in CDSMI']),
-    gpcl: clean(row['GPCL in CDSMI']),
-    unknown: clean(row['Unknown in CDSMI']),
+    leadLines: leadLines,
+    gpcl: gpcl,
+    unknown: unknown,
     totalToReplace: totalToReplace,
     totalReplaced: totalReplaced,
     percentReplaced: percentReplaced,
