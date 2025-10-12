@@ -2,22 +2,12 @@ import React, { useState, useMemo } from 'react';
 import './WaterSystemDirectory.css';
 import waterSystemsData from '../data/waterSystemsData';
 
-// Import your data here - for now using sample data
-// In production, you'll import from a data file or API
-const sampleData = [
-  { pwsid: 'MI0000011', name: 'DETROIT CITY OF', population: 639111, leadLines: 80595, gpcl: 0, unknown: 0, totalToReplace: 80595, totalReplaced: 8656, percentReplaced: 10.7, exceedance: '' },
-  { pwsid: 'MI0000012', name: 'GRAND RAPIDS', population: 198893, leadLines: 19430, gpcl: 0, unknown: 0, totalToReplace: 19430, totalReplaced: 5383, percentReplaced: 27.7, exceedance: '' },
-  { pwsid: 'MI0000013', name: 'JACKSON', population: 31309, leadLines: 7840, gpcl: 0, unknown: 0, totalToReplace: 7840, totalReplaced: 695, percentReplaced: 8.9, exceedance: '2023' },
-  // Add more data here...
-];
-
 function WaterSystemDirectory({ data = waterSystemsData }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState('leadLines');
   const [sortDirection, setSortDirection] = useState('desc');
   const [filterExceedances, setFilterExceedances] = useState(false);
   
-  // Filter and sort data
   const filteredAndSortedData = useMemo(() => {
     let filtered = data.filter(system => 
       system.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -25,13 +15,12 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
     );
     
     if (filterExceedances) {
-      filtered = filtered.filter(system => system.exceedance && system.exceedance !== '');
+      filtered = filtered.filter(system => system.exceedance && system.exceedance !== '' && system.exceedance !== '-');
     }
     
-    // Only show systems with lead lines
-    filtered = filtered.filter(system => system.leadLines > 0);
+    // Only show systems with lines to replace
+    filtered = filtered.filter(system => system.totalToReplace > 0);
     
-    // Sort
     filtered.sort((a, b) => {
       let aVal = a[sortField];
       let bVal = b[sortField];
@@ -105,6 +94,34 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
           Showing {filteredAndSortedData.length} systems
         </div>
       </div>
+
+      <div className="sort-controls">
+        <span className="sort-label">Sort by:</span>
+        <button 
+          className={`sort-btn ${sortField === 'name' ? 'active' : ''}`}
+          onClick={() => handleSort('name')}
+        >
+          Name {sortField === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
+        </button>
+        <button 
+          className={`sort-btn ${sortField === 'leadLines' ? 'active' : ''}`}
+          onClick={() => handleSort('leadLines')}
+        >
+          Lead Lines {sortField === 'leadLines' && (sortDirection === 'asc' ? '↑' : '↓')}
+        </button>
+        <button 
+          className={`sort-btn ${sortField === 'population' ? 'active' : ''}`}
+          onClick={() => handleSort('population')}
+        >
+          Population {sortField === 'population' && (sortDirection === 'asc' ? '↑' : '↓')}
+        </button>
+        <button 
+          className={`sort-btn ${sortField === 'percentReplaced' ? 'active' : ''}`}
+          onClick={() => handleSort('percentReplaced')}
+        >
+          Progress {sortField === 'percentReplaced' && (sortDirection === 'asc' ? '↑' : '↓')}
+        </button>
+      </div>
       
       <div className="systems-grid">
         {filteredAndSortedData.length === 0 ? (
@@ -117,7 +134,7 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
             <div key={system.pwsid} className="system-card">
               <div className="card-header">
                 <h3>{system.name}</h3>
-                {system.exceedance && (
+                {system.exceedance && system.exceedance !== '-' && (
                   <span className="exceedance-badge" title={`Lead action level exceeded in ${system.exceedance}`}>
                     ⚠️ Exceedance
                   </span>
@@ -140,10 +157,29 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
                   <span className="stat-value">{system.totalReplaced.toLocaleString()}</span>
                 </div>
                 
+                {system.gpcl > 0 && (
+                  <div className="stat-row warning">
+                    <span className="stat-label">Galvanized (GPCL)</span>
+                    <span className="stat-value">{system.gpcl.toLocaleString()}</span>
+                  </div>
+                )}
+                
                 {system.unknown > 0 && (
                   <div className="stat-row warning">
                     <span className="stat-label">Unknown Material</span>
                     <span className="stat-value">{system.unknown.toLocaleString()}</span>
+                  </div>
+                )}
+                
+                <div className="stat-row">
+                  <span className="stat-label">Total to be Identified and/or Replaced</span>
+                  <span className="stat-value">{system.totalToReplace.toLocaleString()}</span>
+                </div>
+                
+                {system.exceedance && system.exceedance !== '-' && (
+                  <div className="stat-row" style={{background: '#fef2f2', margin: '10px -20px', padding: '12px 20px'}}>
+                    <span className="stat-label">Most Recent Lead Action Level Exceedance</span>
+                    <span className="stat-value" style={{color: '#dc2626'}}>{system.exceedance}</span>
                   </div>
                 )}
                 
@@ -173,34 +209,6 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
             </div>
           ))
         )}
-      </div>
-      
-      <div className="sort-controls">
-        <span className="sort-label">Sort by:</span>
-        <button 
-          className={`sort-btn ${sortField === 'name' ? 'active' : ''}`}
-          onClick={() => handleSort('name')}
-        >
-          Name {sortField === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
-        </button>
-        <button 
-          className={`sort-btn ${sortField === 'leadLines' ? 'active' : ''}`}
-          onClick={() => handleSort('leadLines')}
-        >
-          Lead Lines {sortField === 'leadLines' && (sortDirection === 'asc' ? '↑' : '↓')}
-        </button>
-        <button 
-          className={`sort-btn ${sortField === 'population' ? 'active' : ''}`}
-          onClick={() => handleSort('population')}
-        >
-          Population {sortField === 'population' && (sortDirection === 'asc' ? '↑' : '↓')}
-        </button>
-        <button 
-          className={`sort-btn ${sortField === 'percentReplaced' ? 'active' : ''}`}
-          onClick={() => handleSort('percentReplaced')}
-        >
-          Progress {sortField === 'percentReplaced' && (sortDirection === 'asc' ? '↑' : '↓')}
-        </button>
       </div>
     </div>
   );
