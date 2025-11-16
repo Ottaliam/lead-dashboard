@@ -45,10 +45,8 @@ function RankingTable({ data = waterSystemsData }) {
   }, [data, sortField, sortDirection, viewMode]);
 
   const getProgressClass = (percent) => {
-    if (percent >= 50) return 'good';
-    if (percent >= 25) return 'fair';
-    if (percent >= 10) return 'poor';
-    return 'critical';
+    if (percent >= 20) return 'compliant';
+    return 'not-compliant';
   };
 
   const getRank = (index) => {
@@ -109,23 +107,15 @@ function RankingTable({ data = waterSystemsData }) {
       </div>
 
       <div className="table-legend">
-        <div className="legend-title">Progress Status:</div>
+        <div className="legend-title">Compliance Status:</div>
         <div className="legend-items">
           <div className="legend-item">
-            <div className="status-indicator good"></div>
-            <span>Good (≥50%)</span>
+            <div className="status-indicator compliant"></div>
+            <span>Compliant (≥20%)</span>
           </div>
           <div className="legend-item">
-            <div className="status-indicator fair"></div>
-            <span>Fair (25-49%)</span>
-          </div>
-          <div className="legend-item">
-            <div className="status-indicator poor"></div>
-            <span>Poor (10-24%)</span>
-          </div>
-          <div className="legend-item">
-            <div className="status-indicator critical"></div>
-            <span>Critical (&lt;10%)</span>
+            <div className="status-indicator not-compliant"></div>
+            <span>Not in compliance (&lt;20%)</span>
           </div>
         </div>
       </div>

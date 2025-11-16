@@ -18,6 +18,32 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
+        <div className="header-logos">
+          <a 
+            href="https://planetdetroit.org" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="logo-link"
+          >
+            <img 
+              src="/lead-dashboard/planet-detroit-logo.png" 
+              alt="Planet Detroit" 
+              className="header-logo"
+            />
+          </a>
+          <a 
+            href="https://safewaterengineering.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="logo-link"
+          >
+            <img 
+              src="/lead-dashboard/safe-water-engineering-logo.png" 
+              alt="Safe Water Engineering" 
+              className="header-logo"
+            />
+          </a>
+        </div>
         <div className="header-content">
           <h1>Michigan Lead Service Line Tracker</h1>
           <p>Comprehensive data on lead service line replacement across Michigan</p>

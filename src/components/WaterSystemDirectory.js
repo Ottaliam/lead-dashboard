@@ -7,6 +7,7 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
   const [sortField, setSortField] = useState('leadLines');
   const [sortDirection, setSortDirection] = useState('desc');
   const [filterExceedances, setFilterExceedances] = useState(false);
+  const [filterLCRExceedances, setFilterLCRExceedances] = useState(false);
   
   const filteredAndSortedData = useMemo(() => {
     let filtered = data.filter(system => 
@@ -16,6 +17,17 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
     
     if (filterExceedances) {
       filtered = filtered.filter(system => system.exceedance && system.exceedance !== '' && system.exceedance !== '-');
+    }
+    
+    // Filter for LCR exceedances since 2018 (Michigan's LCR revision year)
+    if (filterLCRExceedances) {
+      filtered = filtered.filter(system => {
+        if (!system.exceedance || system.exceedance === '' || system.exceedance === '-') {
+          return false;
+        }
+        const exceedanceYear = parseInt(system.exceedance, 10);
+        return exceedanceYear >= 2018;
+      });
     }
     
     // Only show systems with lines to replace
@@ -33,7 +45,7 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
     });
     
     return filtered;
-  }, [data, searchTerm, sortField, sortDirection, filterExceedances]);
+  }, [data, searchTerm, sortField, sortDirection, filterExceedances, filterLCRExceedances]);
   
   const handleSort = (field) => {
     if (sortField === field) {
@@ -45,19 +57,13 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
   };
   
   const getProgressColor = (percent) => {
-    if (percent >= 75) return '#16a34a';
-    if (percent >= 50) return '#84cc16';
-    if (percent >= 25) return '#eab308';
-    if (percent >= 10) return '#f97316';
-    return '#dc2626';
+    if (percent >= 20) return '#16a34a'; // Compliant - green
+    return '#dc2626'; // Not in compliance - red
   };
   
   const getProgressLabel = (percent) => {
-    if (percent >= 75) return 'Excellent';
-    if (percent >= 50) return 'Good';
-    if (percent >= 25) return 'Fair';
-    if (percent >= 10) return 'Poor';
-    return 'Critical';
+    if (percent >= 20) return 'Compliant';
+    return 'Not in compliance';
   };
   
   return (
@@ -87,6 +93,15 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
               onChange={(e) => setFilterExceedances(e.target.checked)}
             />
             <span>Show only systems with lead action level exceedances</span>
+          </label>
+          
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={filterLCRExceedances}
+              onChange={(e) => setFilterLCRExceedances(e.target.checked)}
+            />
+            <span>Show only systems with LCR exceedances since 2018</span>
           </label>
         </div>
         
@@ -198,7 +213,7 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
                     />
                   </div>
                   <div className="progress-status" style={{ color: getProgressColor(system.percentReplaced) }}>
-                    {getProgressLabel(system.percentReplaced)} Progress
+                    {getProgressLabel(system.percentReplaced)}
                   </div>
                 </div>
                 

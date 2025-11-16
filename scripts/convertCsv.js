@@ -21,8 +21,14 @@ const jsData = parsed.data.map(row => {
   const totalToReplace = leadLines + gpcl + unknown;
   const totalReplaced = clean(row['Grand Total of Lead Service Lines Replaced']);
   
-  let percentReplaced = totalToReplace > 0 ? (totalReplaced / totalToReplace) * 100 : 0;
-  if (percentReplaced > 100) percentReplaced = 100;
+  // Read percentage directly from CSV if it exists, otherwise calculate it
+  let percentReplaced = clean(row['% Replaced to Date']);
+  
+  // If percentage not in CSV, calculate it
+  if (percentReplaced === 0 && totalToReplace > 0 && totalReplaced > 0) {
+    percentReplaced = (totalReplaced / totalToReplace) * 100;
+    if (percentReplaced > 100) percentReplaced = 100;
+  }
 
   return {
     pwsid: (row['PWSID'] || '').trim(),

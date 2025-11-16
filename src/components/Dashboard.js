@@ -53,11 +53,6 @@ function Dashboard() {
   return (
     <div className="container">
       <div className="card">
-        <div className="header">
-          <h1>Michigan Lead Service Line Replacement</h1>
-          <p>Tracking statewide progress (2021-2024)</p>
-        </div>
-        
         <div className="stats-grid">
           <div className="stat-card red">
             <div className="stat-label">TOTAL TO REPLACE</div>
@@ -115,7 +110,7 @@ function Dashboard() {
               </LineChart>
             </ResponsiveContainer>
             <div className="insight-box green">
-              <strong>138% increase</strong> from 2021 to 2024 — progress is accelerating!
+              <strong>138% increase</strong> from 2021 to 2024 – progress is accelerating!
             </div>
           </div>
           
