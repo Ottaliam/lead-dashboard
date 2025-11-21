@@ -25,8 +25,7 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
       });
     }
     
-    // Only show systems with lines to replace
-    filtered = filtered.filter(system => system.totalToReplace > 0);
+    // Show all systems in the directory (removed totalToReplace > 0 filter)
     
     filtered.sort((a, b) => {
       let aVal = a[sortField];
@@ -51,13 +50,15 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
     }
   };
   
-  const getProgressColor = (percent) => {
-    if (percent >= 20) return '#16a34a'; // Compliant - green
+  const getProgressColor = (system) => {
+    if (system.totalToReplace === 0) return '#3b82f6'; // No lead - blue
+    if (system.percentReplaced >= 20) return '#16a34a'; // Compliant - green
     return '#dc2626'; // Not in compliance - red
   };
   
-  const getProgressLabel = (percent) => {
-    if (percent >= 20) return 'Compliant';
+  const getProgressLabel = (system) => {
+    if (system.totalToReplace === 0) return 'No lead lines identified';
+    if (system.percentReplaced >= 20) return 'Compliant';
     return 'Not in compliance';
   };
   
@@ -194,12 +195,12 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
                       className="progress-bar-inner"
                       style={{ 
                         width: `${Math.min(system.percentReplaced, 100)}%`,
-                        backgroundColor: getProgressColor(system.percentReplaced)
+                        backgroundColor: getProgressColor(system)
                       }}
                     />
                   </div>
-                  <div className="progress-status" style={{ color: getProgressColor(system.percentReplaced) }}>
-                    {getProgressLabel(system.percentReplaced)}
+                  <div className="progress-status" style={{ color: getProgressColor(system) }}>
+                    {getProgressLabel(system)}
                   </div>
                 </div>
                 

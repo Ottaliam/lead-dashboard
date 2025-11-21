@@ -37,7 +37,10 @@ function About() {
             <dd>The sum of known lead lines, GPCL, and unknown material lines</dd>
             
             <dt>Compliant</dt>
-            <dd>Systems that have replaced at least 20% of required lines annually</dd>
+            <dd>Systems with identified lead lines that have replaced at least 20% of required lines annually</dd>
+            
+            <dt>No Lead Lines Identified</dt>
+            <dd>Systems that have completed inventories and found no lead service lines requiring replacement</dd>
             
             <dt>% Replaced</dt>
             <dd>(Lines Replaced ÷ (Lines Replaced + Total to Identify and/or Replace)) × 100</dd>

@@ -21,14 +21,11 @@ const jsData = parsed.data.map(row => {
   const totalToReplace = leadLines + gpcl + unknown;
   const totalReplaced = clean(row['Grand Total of Lead Service Lines Replaced']);
   
-  // Read percentage directly from CSV if it exists, otherwise calculate it
-  let percentReplaced = clean(row['% Replaced to Date']);
-  
-  // If percentage not in CSV, calculate it
-  if (percentReplaced === 0 && totalToReplace > 0 && totalReplaced > 0) {
-    percentReplaced = (totalReplaced / totalToReplace) * 100;
-    if (percentReplaced > 100) percentReplaced = 100;
-  }
+  let percentReplaced = totalToReplace > 0 ? (totalReplaced / totalToReplace) * 100 : 0;
+  if (percentReplaced > 100) percentReplaced = 100;
+
+  const latitude = parseFloat(row['Latitude']) || null;
+  const longitude = parseFloat(row['Longitude']) || null;
 
   return {
     pwsid: (row['PWSID'] || '').trim(),
@@ -40,11 +37,17 @@ const jsData = parsed.data.map(row => {
     totalToReplace: totalToReplace,
     totalReplaced: totalReplaced,
     percentReplaced: percentReplaced,
-    exceedance: (row['Most Recent Lead Action Level Exceedance'] || '').trim()
+    exceedance: (row['Most Recent Lead Action Level Exceedance'] || '').trim(),
+    latitude: latitude,
+    longitude: longitude,
+    epaLink: (row['EPA_Link'] || '').trim(),
   };
 }).filter(row => row.pwsid);
 
 const output = 'export const waterSystemsData = ' + JSON.stringify(jsData, null, 2) + ';\n\nexport default waterSystemsData;';
 
 fs.writeFileSync('src/data/waterSystemsData.js', output);
-console.log('Done! ' + jsData.length + ' systems');
+console.log('✓ Converted ' + jsData.length + ' systems');
+
+const withCoords = jsData.filter(s => s.latitude && s.longitude);
+console.log('✓ ' + withCoords.length + ' systems have coordinates for mapping');

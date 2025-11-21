@@ -44,9 +44,16 @@ function RankingTable({ data = waterSystemsData }) {
     return filtered;
   }, [data, sortField, sortDirection, viewMode]);
 
-  const getProgressClass = (percent) => {
-    if (percent >= 20) return 'compliant';
+  const getProgressClass = (system) => {
+    if (system.totalToReplace === 0) return 'no-lead';
+    if (system.percentReplaced >= 20) return 'compliant';
     return 'not-compliant';
+  };
+
+  const getStatusLabel = (system) => {
+    if (system.totalToReplace === 0) return 'No lead lines identified';
+    if (system.percentReplaced >= 20) return 'Compliant';
+    return 'Not in Compliance';
   };
 
   const getRank = (index) => {
@@ -107,8 +114,12 @@ function RankingTable({ data = waterSystemsData }) {
       </div>
 
       <div className="table-legend">
-        <div className="legend-title">Compliance Status:</div>
+        <div className="legend-title">Status Categories:</div>
         <div className="legend-items">
+          <div className="legend-item">
+            <div className="status-indicator no-lead"></div>
+            <span>No lead lines identified</span>
+          </div>
           <div className="legend-item">
             <div className="status-indicator compliant"></div>
             <span>Compliant (≥20%)</span>
@@ -204,14 +215,15 @@ function RankingTable({ data = waterSystemsData }) {
                 <td className="number-col">{system.totalReplaced.toLocaleString()}</td>
                 <td className="number-col">
                   <div className="progress-cell">
-                    <span className={`progress-badge ${getProgressClass(system.percentReplaced)}`}>
+                    <span className={`progress-badge ${getProgressClass(system)}`}>
                       {system.percentReplaced.toFixed(1)}%
                     </span>
                   </div>
                 </td>
                 <td className="number-col">
                   <div className="status-indicator-wrapper">
-                    <div className={`status-indicator ${getProgressClass(system.percentReplaced)}`}></div>
+                    <div className={`status-indicator ${getProgressClass(system)}`}></div>
+                    <span className="status-text">{getStatusLabel(system)}</span>
                   </div>
                 </td>
               </tr>

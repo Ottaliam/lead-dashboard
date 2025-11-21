@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard';
 import WaterSystemDirectory from './components/WaterSystemDirectory';
 import RankingTable from './components/RankingTable';
 import UnknownMaterialsAlert from './components/UnknownMaterialsAlert';
+import LeadLineMap from './components/LeadLineMap';
 import './App.css';
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
     { id: 'dashboard', label: 'Overview', icon: '📊' },
     { id: 'directory', label: 'Search Systems', icon: '🔍' },
     { id: 'ranking', label: 'Rankings', icon: '📋' },
-    { id: 'unknown', label: 'Data Gaps', icon: '⚠️' }
+    { id: 'unknown', label: 'Data Gaps', icon: '⚠️' },
+    { id: 'map', label: 'Map', icon: '🗺️' }
   ];
 
   return (
@@ -81,6 +83,7 @@ function App() {
         {activeTab === 'directory' && <WaterSystemDirectory />}
         {activeTab === 'ranking' && <RankingTable />}
         {activeTab === 'unknown' && <UnknownMaterialsAlert />}
+        {activeTab === 'map' && <LeadLineMap />}
       </main>
 
       <footer className="app-footer">
