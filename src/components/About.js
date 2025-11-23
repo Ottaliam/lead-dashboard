@@ -17,7 +17,7 @@ function About() {
             Michigan revised its Lead and Copper Rule in 2018, requiring all community water systems to inventory their service line materials and replace lead lines. The new sampling protocol took effect in 2019. The federal Lead and Copper Rule Improvements (2024) mandates full replacement nationwide by 2037.
           </p>
           <p>
-            <strong>Action Level Exceedances:</strong> Water systems that exceed the lead action level (15 parts per billion from 2019–2024; 10 parts per billion starting in 2025) face additional monitoring, public communication, and accelerated replacement requirements.
+            <strong>Action Level Exceedances:</strong> Water systems that exceed the lead action level  (15 parts per billion from 2019–2024; 10 12 parts per billion starting in 2025; and 10 ppb starting in 2027) face additional monitoring, public communication, and accelerated replacement requirements.
           </p>
         </section>
         
@@ -25,7 +25,7 @@ function About() {
           <h2>Key Terms</h2>
           <dl className="definitions">
             <dt>Lead Service Line (LSL)</dt>
-            <dd>A pipe made of lead connecting the water main to a building</dd>
+            <dd>A pipe connecting the water main to a building, where any portion is made of lead. Must be replaced </dd>
             
             <dt>Galvanized Requiring Replacement (GPCL)</dt>
             <dd>Galvanized pipes that were or may have been connected to lead; must be replaced</dd>
@@ -39,6 +39,9 @@ function About() {
             <dt>Compliant</dt>
             <dd>Systems with identified lead lines that have replaced an average of at least 20% of required lines during the 4-year reporting period from 2021–2024</dd>
             
+            <dt>Non-Compliant</dt>
+            <dd>Systems that have replaced less than 20% of required lines over the past 4 years, or did not submit a service line inventory.</dd>
+
             <dt>No Lead Lines Identified</dt>
             <dd>Systems that have completed inventories and found no lead service lines requiring replacement</dd>
             
@@ -52,10 +55,11 @@ function About() {
           <p>
             Michigan EGLE Community Drinking Water Supply Monitoring Inventory and Lead Service Line Replacement Reports, covering 1,383 water systems.
           </p>
-          <ul className="data-dates">
-            <li>Inventory data published by EGLE, March 2025</li>
-            <li>Replacement data published by EGLE, August 2025</li>
-          </ul>
+         <ul className="data-dates">
+            <li>Inventory data published by <a href="https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health/community-water-supply/lead-and-copper-rule/dsmi-inventories" target="_blank" rel="noopener noreferrer">EGLE</a>, March 2025</li>
+            <li>Replacement data published by <a href="https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health/community-water-supply/lead-and-copper-rule/lslr-progress" target="_blank" rel="noopener noreferrer">EGLE</a>, August 2025</li>
+            <li><a href="https://data.michigan.gov/Health/Public-Water-Supply-90th-Percentiles/39ya-9txc/about_data" target="_blank" rel="noopener noreferrer">Public Water Supply 90th Percentiles</a>, November 12, 2025</li>
+        </ul>
         </section>
         
         <section className="about-section support-section">
