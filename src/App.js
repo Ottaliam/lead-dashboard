@@ -27,11 +27,7 @@ function App() {
             rel="noopener noreferrer"
             className="logo-link"
           >
-            <img 
-              src="/lead-dashboard/planet-detroit-logo.png" 
-              alt="Planet Detroit" 
-              className="header-logo"
-            />
+            <img src={process.env.PUBLIC_URL + "/planet-detroit-logo.png"} alt="Planet Detroit" className="header-logo" />
           </a>
           <a 
             href="https://safewaterengineering.com" 
@@ -39,11 +35,7 @@ function App() {
             rel="noopener noreferrer"
             className="logo-link"
           >
-            <img 
-              src="/lead-dashboard/safe-water-engineering-logo.png" 
-              alt="Safe Water Engineering" 
-              className="header-logo"
-            />
+              <img src={process.env.PUBLIC_URL + "/safe-water-engineering-logo.png"} alt="Planet Detroit" className="header-logo" />
           </a>
         </div>
         <div className="header-content">
