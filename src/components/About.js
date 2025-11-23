@@ -17,7 +17,7 @@ function About() {
             Michigan revised its Lead and Copper Rule in 2018, requiring all community water systems to inventory their service line materials and replace lead lines. The new sampling protocol took effect in 2019. The federal Lead and Copper Rule Improvements (2024) mandates full replacement nationwide by 2037.
           </p>
           <p>
-            <strong>Action Level Exceedances:</strong> Water systems that exceed the lead action level  (15 parts per billion from 2019–2024; 10 12 parts per billion starting in 2025; and 10 ppb starting in 2027) face additional monitoring, public communication, and accelerated replacement requirements.
+            <strong>Action Level Exceedances:</strong> Water systems that exceed the lead action level (15 parts per billion from 2019–2024; 10 12 parts per billion starting in 2025; and 10 ppb starting in 2027) face additional monitoring, public communication, and accelerated replacement requirements.
           </p>
         </section>
         
@@ -25,19 +25,19 @@ function About() {
           <h2>Key Terms</h2>
           <dl className="definitions">
             <dt>Lead Service Line (LSL)</dt>
-            <dd>A pipe connecting the water main to a building, where any portion is made of lead. Must be replaced </dd>
+            <dd>A pipe connecting the water main to a building, where any portion is made of lead. Must be replaced. </dd>
             
             <dt>Galvanized Requiring Replacement (GPCL)</dt>
-            <dd>Galvanized pipes that were or may have been connected to lead; must be replaced</dd>
+            <dd>Galvanized pipes that were or may have been connected to lead; must be replaced.</dd>
             
             <dt>Unknown Material</dt>
-            <dd>Lines that haven't been inspected or verified; must be identified</dd>
+            <dd>Lines that haven't been inspected or verified; must be identified.</dd>
             
             <dt>Total to Identify and/or Replace</dt>
-            <dd>The sum of known lead lines, GPCL, and unknown material lines</dd>
+            <dd>The sum of known lead lines, GPCL, and unknown material lines.</dd>
             
             <dt>Compliant</dt>
-            <dd>Systems with identified lead lines that have replaced an average of at least 20% of required lines during the 4-year reporting period from 2021–2024</dd>
+            <dd>Systems with identified lead lines that have replaced an average of at least 20% of required lines during the 4-year reporting period from 2021–2024.</dd>
             
             <dt>Non-Compliant</dt>
             <dd>Systems that have replaced less than 20% of required lines over the past 4 years, or did not submit a service line inventory.</dd>
