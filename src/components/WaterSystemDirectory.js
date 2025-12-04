@@ -47,6 +47,7 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
   const [sortDirection, setSortDirection] = useState('asc');
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterExceedances, setFilterExceedances] = useState(false);
+  const [filterNoLocation, setFilterNoLocation] = useState(false);
 
   // Get unique statuses for filter dropdown
   const availableStatuses = useMemo(() => {
@@ -68,6 +69,13 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
     if (filterExceedances) {
       filtered = filtered.filter(system => 
         system.exceedance && system.exceedance !== '' && system.exceedance !== '-'
+      );
+    }
+    
+    // Filter by no location
+    if (filterNoLocation) {
+      filtered = filtered.filter(system => 
+        !system.latitude || !system.longitude
       );
     }
     
@@ -94,7 +102,7 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
     });
     
     return filtered;
-  }, [data, searchTerm, sortField, sortDirection, filterStatus, filterExceedances]);
+  }, [data, searchTerm, sortField, sortDirection, filterStatus, filterExceedances, filterNoLocation]);
   
   const handleSort = (field) => {
     if (sortField === field) {
@@ -180,6 +188,15 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
             />
             <span>Show only systems with lead action level exceedances</span>
           </label>
+          
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={filterNoLocation}
+              onChange={(e) => setFilterNoLocation(e.target.checked)}
+            />
+            <span>Show only systems without map location</span>
+          </label>
         </div>
         
         <div className="results-count">
@@ -238,7 +255,7 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
         <div className="progress-explainer">
           <h4>Understanding "Progress"</h4>
           <div className="formula-box">
-            <code>% Replaced = (Lines Replaced ÷ Total to Identify and/or Replace) × 100</code>
+            <code>% Replaced = (Lines Replaced ÷ (Total to Identify and/or Replace+Lines Replaced)) × 100</code>
           </div>
           <p>
             <strong>Note:</strong> We calculate Progress based on % Replaced as described above. Systems with many "Unknown" lines may show low progress even if they've replaced all <em>known</em> lead lines. 
@@ -286,16 +303,24 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
             const statusStyle = getStatusStyle(system.status);
             const showDetails = shouldShowLeadDetails(system);
             const hasExceedance = system.exceedance && system.exceedance !== '' && system.exceedance !== '-';
+            const hasNoLocation = !system.latitude || !system.longitude;
             
             return (
               <div key={system.pwsid} className="system-card">
                 <div className={getHeaderStyle(system.status)}>
                   <h3>{system.name}</h3>
-                  {hasExceedance && (
-                    <span className="exceedance-badge">
-                      ⚠️ LCR Exceedance {String(system.exceedance).replace('.0', '')}
-                    </span>
-                  )}
+                  <div className="header-badges">
+                    {hasExceedance && (
+                      <span className="exceedance-badge">
+                        ⚠️ LCR Exceedance {String(system.exceedance).replace('.0', '')}
+                      </span>
+                    )}
+                    {hasNoLocation && (
+                      <span className="no-location-badge">
+                        📍 No map location
+                      </span>
+                    )}
+                  </div>
                 </div>
                 
                 <div className="card-body">

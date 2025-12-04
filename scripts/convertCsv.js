@@ -29,9 +29,18 @@ const jsData = parsed.data.map(row => {
   // Use the manually categorized status
   const status = cleanString(row['Status']) || 'Unknown';
   
-  // Calculate percent replaced, but cap at 100%
-  let percentReplaced = totalToReplace > 0 ? (totalReplaced / totalToReplace) * 100 : 0;
-  if (percentReplaced > 100) percentReplaced = 100;
+  // Calculate percent replaced
+  // For "100% replaced" systems, set to 100 since all lines have been replaced
+  // Otherwise, calculate based on replaced / (toReplace + replaced), capped at 100%
+  let percentReplaced;
+  if (status === '100% replaced') {
+    percentReplaced = 100;
+  } else if (totalToReplace > 0 || totalReplaced > 0) {
+    percentReplaced = (totalReplaced / (totalToReplace + totalReplaced)) * 100;
+    if (percentReplaced > 100) percentReplaced = 100;
+  } else {
+    percentReplaced = 0;
+  }
 
   return {
     pwsid: cleanString(row['PWSID']),

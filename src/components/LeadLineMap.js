@@ -26,10 +26,6 @@ const STATUS_CONFIG = {
     color: '#059669',      // Emerald (darker green)
     description: 'All lead lines replaced'
   },
-  'No service lines; wholesale only': {
-    color: '#6b7280',      // Gray
-    description: 'Wholesale water provider, no service lines'
-  },
   'Unknown': {
     color: '#9ca3af',      // Light gray
     description: 'Status unknown'
@@ -43,13 +39,13 @@ function LeadLineMap() {
     'No lead lines': true,
     'Compliant': true,
     '100% replaced': true,
-    'Not compliant': true,
-    'No service lines; wholesale only': true
+    'Not compliant': true
   });
 
-  // Filter systems with coordinates
+  // Filter systems with coordinates (excluding wholesale-only systems)
   const systemsWithCoords = waterSystemsData.filter(
-    system => system.latitude && system.longitude
+    system => system.latitude && system.longitude && 
+              system.status !== 'No service lines; wholesale only'
   );
 
   // Count systems by status
@@ -73,9 +69,8 @@ function LeadLineMap() {
 
   // Calculate marker radius based on total lines to replace
   const getMarkerRadius = (system) => {
-    // For non-filers or systems with no data, use a fixed size
-    if (system.status === 'Inventory not received or incomplete' || 
-        system.status === 'No service lines; wholesale only') {
+    // For non-filers, use a fixed size
+    if (system.status === 'Inventory not received or incomplete') {
       return 6;
     }
     // For systems with no lead lines, use small fixed size
@@ -99,8 +94,7 @@ function LeadLineMap() {
     'Not compliant',
     'Compliant',
     '100% replaced',
-    'No lead lines',
-    'No service lines; wholesale only'
+    'No lead lines'
   ];
 
   return (
@@ -112,6 +106,7 @@ function LeadLineMap() {
 
       {/* Filter Controls */}
       <div className="map-controls">
+        <p className="filter-instructions">Click to show or hide status categories:</p>
         {statusOrder.map(status => (
           <label key={status}>
             <input
@@ -160,8 +155,7 @@ function LeadLineMap() {
                   <p><strong>PWSID:</strong> {system.pwsid}</p>
                   <p><strong>Population:</strong> {system.population.toLocaleString()}</p>
                   
-                  {system.status !== 'Inventory not received or incomplete' && 
-                   system.status !== 'No service lines; wholesale only' && (
+                  {system.status !== 'Inventory not received or incomplete' && (
                     <>
                       <p><strong>Lead Lines:</strong> {system.leadLines.toLocaleString()}</p>
                       <p><strong>Total to Replace:</strong> {system.totalToReplace.toLocaleString()}</p>
@@ -175,12 +169,6 @@ function LeadLineMap() {
                   {system.status === 'Inventory not received or incomplete' && (
                     <p className="status-warning inventory-warning">
                       <strong>⚠️ No complete inventory filed</strong>
-                    </p>
-                  )}
-                  
-                  {system.status === 'No service lines; wholesale only' && (
-                    <p className="status-info">
-                      <strong>ℹ️ Wholesale provider - no service lines</strong>
                     </p>
                   )}
                   
@@ -256,6 +244,9 @@ function LeadLineMap() {
           <strong>Note:</strong> This map shows {systemsWithCoords.length.toLocaleString()} water systems 
           ({(systemsWithCoords.length / waterSystemsData.length * 100).toFixed(1)}% of all Michigan systems) 
           with verified location data from EPA community water system boundaries. Click on any circle to see detailed information and access the EPA facility report.
+        </p>
+        <p style={{ marginTop: '10px' }}>
+          If the water utility you are looking for is not listed here, look them up on the <strong>Search Systems</strong> page.
         </p>
       </div>
     </div>

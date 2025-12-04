@@ -148,7 +148,8 @@ function Dashboard() {
         </div>
         
         <div className="footer">
-          Data source: Michigan EGLE Community Drinking Supply Monitoring Inventory (CDSMI) and Lead Service Line Replacement Reports
+          <p>Data source: Michigan EGLE Community Drinking Supply Monitoring Inventory (CDSMI) and Lead Service Line Replacement Reports</p>
+          <p style={{ marginTop: '10px' }}>If the water utility you are looking for is not listed here, look them up on the <strong>Search Systems</strong> page.</p>
         </div>
       </div>
     </div>

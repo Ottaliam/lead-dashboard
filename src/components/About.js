@@ -45,8 +45,11 @@ function About() {
             <dt>No Lead Lines Identified</dt>
             <dd>Systems that have completed inventories and found no lead service lines requiring replacement</dd>
             
+            <dt>No Service Lines (Wholesale Only)</dt>
+            <dd>Wholesale water providers that sell water to other systems but do not have their own service line connections to homes or buildings.</dd>
+            
             <dt>% Replaced</dt>
-            <dd>(Lines Replaced ÷ (Lines Replaced + Total to Identify and/or Replace)) × 100</dd>
+            <dd>% Replaced = (Lines Replaced ÷ (Total to Identify and/or Replace+Lines Replaced)) × 100</dd>
           </dl>
         </section>
         

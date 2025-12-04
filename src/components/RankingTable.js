@@ -77,10 +77,8 @@ function RankingTable({ data = waterSystemsData }) {
         );
         break;
       case 'worst-progress':
-        // Same filter as best-progress but sorted differently
+        // Only show non-compliant systems that need attention
         filtered = [...data].filter(d => 
-          d.status === 'Compliant' || 
-          d.status === '100% replaced' || 
           d.status === 'Not compliant'
         );
         break;
@@ -89,17 +87,25 @@ function RankingTable({ data = waterSystemsData }) {
     }
     
     // Sort based on view mode
-    if (viewMode === 'best-progress') {
-      // Sort by percent replaced descending, with 100% replaced first
+    if (viewMode === 'best-progress' && sortField === 'percentReplaced' && sortDirection === 'desc') {
+      // Default best-progress sort: 100% replaced first, then by percentReplaced, then by totalReplaced
       filtered.sort((a, b) => {
         // 100% replaced always comes first
         if (a.status === '100% replaced' && b.status !== '100% replaced') return -1;
         if (b.status === '100% replaced' && a.status !== '100% replaced') return 1;
-        // Then by percent replaced
-        return b.percentReplaced - a.percentReplaced;
+        // Within 100% replaced, sort by totalReplaced descending
+        if (a.status === '100% replaced' && b.status === '100% replaced') {
+          return b.totalReplaced - a.totalReplaced;
+        }
+        // Then by percent replaced descending
+        if (a.percentReplaced !== b.percentReplaced) {
+          return b.percentReplaced - a.percentReplaced;
+        }
+        // Finally by totalReplaced descending as tie-breaker
+        return b.totalReplaced - a.totalReplaced;
       });
-    } else if (viewMode === 'worst-progress') {
-      // Sort by percent replaced ascending, then by total to replace descending
+    } else if (viewMode === 'worst-progress' && sortField === 'percentReplaced' && sortDirection === 'asc') {
+      // Default worst-progress sort: by percent replaced ascending, then by total to replace descending
       filtered.sort((a, b) => {
         // First sort by percent replaced (ascending - worst first)
         if (a.percentReplaced !== b.percentReplaced) {
@@ -109,7 +115,7 @@ function RankingTable({ data = waterSystemsData }) {
         return b.totalToReplace - a.totalToReplace;
       });
     } else {
-      // Standard sorting for other views
+      // Standard sorting for all views when user clicks a column header
       filtered.sort((a, b) => {
         let aVal = a[sortField];
         let bVal = b[sortField];
@@ -119,11 +125,20 @@ function RankingTable({ data = waterSystemsData }) {
           bVal = bVal.toLowerCase();
         }
         
+        // Primary sort
+        let comparison;
         if (sortDirection === 'asc') {
-          return aVal > bVal ? 1 : -1;
+          comparison = aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
         } else {
-          return aVal < bVal ? 1 : -1;
+          comparison = aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
         }
+        
+        // Secondary sort by totalReplaced descending if primary values are equal
+        if (comparison === 0) {
+          return b.totalReplaced - a.totalReplaced;
+        }
+        
+        return comparison;
       });
     }
     
@@ -364,7 +379,7 @@ function RankingTable({ data = waterSystemsData }) {
                         borderColor: statusStyle.borderColor
                       }}
                     >
-                      {system.percentReplaced.toFixed(1)}%
+                      {system.status === '100% replaced' ? '100.0' : system.percentReplaced.toFixed(1)}%
                     </span>
                   </td>
                   <td className="status-col">
@@ -396,8 +411,11 @@ function RankingTable({ data = waterSystemsData }) {
             <>This view shows systems actively replacing lead lines (Compliant, Not Compliant, or 100% Replaced). Systems with no lead lines, incomplete inventories, or wholesale-only operations are excluded.</>
           )}
           {viewMode === 'worst-progress' && (
-            <>This view shows systems actively replacing lead lines, sorted by lowest progress first, then by total lines needing attention. Systems with no lead lines, incomplete inventories, or wholesale-only operations are excluded.</>
+            <>This view shows only non-compliant systems (&lt;20% average replacement), sorted by lowest progress first. These are the systems that need the most attention.</>
           )}
+        </p>
+        <p className="filter-explanation" style={{ marginTop: '10px' }}>
+          If the water utility you are looking for is not listed here, look them up on the <strong>Search Systems</strong> page.
         </p>
       </div>
     </div>
