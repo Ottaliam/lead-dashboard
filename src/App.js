@@ -11,8 +11,8 @@ function App() {
   const [activeTab, setActiveTab] = useState('map');
 
   // Check if this is an embed route
-  const isEmbed = window.location.hash.includes('/embed/map') || 
-                  window.location.pathname.includes('/embed/map');
+  const isEmbed = window.location.hash === '#embed' || 
+                  window.location.search.includes('embed=true');
   
   // If embed route, render only the embed map (no header/footer)
   if (isEmbed) {

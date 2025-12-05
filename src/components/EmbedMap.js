@@ -174,7 +174,7 @@ function EmbedMap() {
         <div className="legend-item">
           <span className="legend-note">Circle size = lines to replace</span>
         </div>
-        <a href="https://planetdetroit.github.io/michigan-lead-dashboard/" target="_blank" rel="noopener noreferrer" className="embed-credit">
+        <a href="https://leadservicelines.planetdetroit.org/" target="_blank" rel="noopener noreferrer" className="embed-credit">
           Full Dashboard →
         </a>
       </div>
