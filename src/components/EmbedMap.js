@@ -110,7 +110,7 @@ function EmbedMap() {
       {/* Map */}
       <MapContainer
         center={[44.3148, -85.6024]}
-        zoom={7}
+        zoom={6}
         style={{ height: 'calc(100vh - 140px)', width: '100%' }}
         scrollWheelZoom={true}
       >

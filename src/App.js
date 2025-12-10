@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import About from './components/About';
 import Dashboard from './components/Dashboard';
 import WaterSystemDirectory from './components/WaterSystemDirectory';
@@ -7,8 +7,55 @@ import LeadLineMap from './components/LeadLineMap';
 import EmbedMap from './components/EmbedMap';
 import './App.css';
 
+// Google Analytics Measurement ID
+const GA_MEASUREMENT_ID = 'G-13120361886';
+
+// Initialize Google Analytics
+const initGA = () => {
+  // Load gtag.js script
+  const script = document.createElement('script');
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  script.async = true;
+  document.head.appendChild(script);
+
+  // Initialize dataLayer and gtag function
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function() {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag('js', new Date());
+  window.gtag('config', GA_MEASUREMENT_ID);
+};
+
+// Track page/tab views
+const trackPageView = (pageName) => {
+  if (window.gtag) {
+    window.gtag('event', 'page_view', {
+      page_title: pageName,
+      page_path: `/${pageName.toLowerCase().replace(' ', '-')}`
+    });
+  }
+};
+
 function App() {
   const [activeTab, setActiveTab] = useState('map');
+
+  // Initialize GA on mount
+  useEffect(() => {
+    initGA();
+  }, []);
+
+  // Track tab changes
+  useEffect(() => {
+    const tabNames = {
+      map: 'Map',
+      dashboard: 'Overview',
+      directory: 'Search Systems',
+      ranking: 'Rankings',
+      about: 'About'
+    };
+    trackPageView(tabNames[activeTab] || activeTab);
+  }, [activeTab]);
 
   // Check if this is an embed route
   const isEmbed = window.location.hash === '#embed' || 
@@ -45,7 +92,7 @@ function App() {
             rel="noopener noreferrer"
             className="logo-link"
           >
-              <img src={process.env.PUBLIC_URL + "/safe-water-engineering-logo.png"} alt="Planet Detroit" className="header-logo" />
+              <img src={process.env.PUBLIC_URL + "/safe-water-engineering-logo.png"} alt="Safe Water Engineering" className="header-logo" />
           </a>
         </div>
         <div className="header-content">
@@ -86,8 +133,22 @@ function App() {
       </main>
 
       <footer className="app-footer">
+        {/* Tips Callout */}
+        <div className="footer-tips-callout">
+          <span className="tips-icon">💡</span>
+          <h3>Have questions? We want to hear from you!</h3>
+          <p>
+            Send your questions or tips to{' '}
+            <a href="mailto:connect@planetdetroit.org">connect@planetdetroit.org</a>
+          </p>
+          <p className="tips-secondary">
+            📬 We're especially interested in hearing about communications you've received 
+            from your water utility about lead service lines.
+          </p>
+        </div>
+        
         <p>Data source: Michigan EGLE Community Drinking Supply Monitoring Inventory (CDSMI) and Lead Service Line Replacement Reports</p>
-        <p>© 2025 Planet Detroit | Last updated: October 2025</p>
+        <p>© 2025 Planet Detroit | Last updated: December 2025</p>
       </footer>
     </div>
   );

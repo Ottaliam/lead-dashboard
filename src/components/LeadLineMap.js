@@ -15,7 +15,7 @@ const STATUS_CONFIG = {
     description: '<20% average replacement, 2021–2024'
   },
   'Compliant': {
-    color: '#16a34a',      // Green
+    color: '#4ade80',      // Light green
     description: '≥20% average replacement, 2021–2024'
   },
   'Inventory not received or incomplete': {
@@ -23,7 +23,7 @@ const STATUS_CONFIG = {
     description: 'No complete inventory filed'
   },
   '100% replaced': {
-    color: '#059669',      // Emerald (darker green)
+    color: '#047857',      // Dark emerald
     description: 'All lead lines replaced'
   },
   'Unknown': {
@@ -86,6 +86,15 @@ function LeadLineMap() {
       ...prev,
       [status]: !prev[status]
     }));
+  };
+
+  // Check if this is the City of Flint
+  const isFlint = (system) => {
+    const nameUpper = system.name.toUpperCase();
+    return nameUpper.includes('FLINT, CITY OF') || 
+           nameUpper.includes('CITY OF FLINT') ||
+           nameUpper === 'FLINT' ||
+           system.pwsid === 'MI0002520';
   };
 
   // Order of statuses for display (most concerning first)
@@ -155,6 +164,13 @@ function LeadLineMap() {
                   <p><strong>PWSID:</strong> {system.pwsid}</p>
                   <p><strong>Population:</strong> {system.population.toLocaleString()}</p>
                   
+                  {/* Flint special note */}
+                  {isFlint(system) && (
+                    <p className="status-info flint-popup-note">
+                      <strong>ℹ️ Note:</strong> Data do not include lead or galvanized service lines replaced between 2015 and 2021.
+                    </p>
+                  )}
+                  
                   {system.status !== 'Inventory not received or incomplete' && (
                     <>
                       <p><strong>Lead Lines:</strong> {system.leadLines.toLocaleString()}</p>
@@ -184,19 +200,6 @@ function LeadLineMap() {
                   
                   {system.exceedance && system.exceedance !== '-' && system.exceedance !== '' && (
                     <p><strong>LCR Exceedance:</strong> {system.exceedance}</p>
-                  )}
-                  
-                  {system.epaLink && (
-                    <p className="epa-link">
-                      <a 
-                        href={system.epaLink} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="epa-link-button"
-                      >
-                        View EPA Facility Report →
-                      </a>
-                    </p>
                   )}
                 </div>
               </div>
@@ -243,7 +246,7 @@ function LeadLineMap() {
         <p>
           <strong>Note:</strong> This map shows {systemsWithCoords.length.toLocaleString()} water systems 
           ({(systemsWithCoords.length / waterSystemsData.length * 100).toFixed(1)}% of all Michigan systems) 
-          with verified location data from EPA community water system boundaries. Click on any circle to see detailed information and access the EPA facility report.
+          with verified location data from EPA community water system boundaries. Click on any circle to see detailed information.
         </p>
         <p style={{ marginTop: '10px' }}>
           If the water utility you are looking for is not listed here, look them up on the <strong>Search Systems</strong> page.

@@ -15,7 +15,7 @@ const STATUS_CONFIG = {
     borderColor: '#fecaca'
   },
   'Compliant': {
-    color: '#16a34a',
+    color: '#22c55e',      // Lighter green
     bgColor: '#f0fdf4',
     borderColor: '#bbf7d0'
   },
@@ -25,7 +25,7 @@ const STATUS_CONFIG = {
     borderColor: '#e9d5ff'
   },
   '100% replaced': {
-    color: '#059669',
+    color: '#047857',      // Darker emerald
     bgColor: '#ecfdf5',
     borderColor: '#a7f3d0'
   },
@@ -118,6 +118,15 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
     return system.status !== 'No lead lines' && 
            system.status !== '100% replaced' &&
            system.status !== 'No service lines; wholesale only';
+  };
+
+  // Check if this is the City of Flint
+  const isFlint = (system) => {
+    const nameUpper = system.name.toUpperCase();
+    return nameUpper.includes('FLINT, CITY OF') || 
+           nameUpper.includes('CITY OF FLINT') ||
+           nameUpper === 'FLINT' ||
+           system.pwsid === 'MI0002520';
   };
 
   // Get status styling
@@ -223,7 +232,7 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
             </div>
           </div>
           <div className="legend-item">
-            <span className="legend-color" style={{ background: 'linear-gradient(135deg, #15803d, #16a34a)' }}></span>
+            <span className="legend-color" style={{ background: 'linear-gradient(135deg, #16a34a, #4ade80)' }}></span>
             <div className="legend-text">
               <strong>Compliant</strong>
               <span>≥20% average replacement, 2021–2024</span>
@@ -311,6 +320,7 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
             const showDetails = shouldShowLeadDetails(system);
             const hasExceedance = system.exceedance && system.exceedance !== '' && system.exceedance !== '-';
             const hasNoLocation = !system.latitude || !system.longitude;
+            const isFlintSystem = isFlint(system);
             
             return (
               <div key={system.pwsid} className="system-card">
@@ -331,6 +341,14 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
                 </div>
                 
                 <div className="card-body">
+                  {/* Flint special note */}
+                  {isFlintSystem && (
+                    <div className="flint-note">
+                      <span className="flint-note-icon">ℹ️</span>
+                      <p>The data presented here for City of Flint do not include lead or galvanized service lines replaced between 2015 and 2021.</p>
+                    </div>
+                  )}
+                  
                   {/* Population */}
                   <div className="stat-row">
                     <span className="stat-label">Population Served</span>
@@ -392,19 +410,9 @@ function WaterSystemDirectory({ data = waterSystemsData }) {
                     </div>
                   )}
                   
-                  {/* Footer with PWSID and EPA link */}
+                  {/* Footer with PWSID only (EPA link removed) */}
                   <div className="card-footer">
                     <span className="pwsid">PWSID: {system.pwsid}</span>
-                    {system.epaLink && (
-                      <a 
-                        href={system.epaLink} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="epa-link-button"
-                      >
-                        EPA Report →
-                      </a>
-                    )}
                   </div>
                 </div>
               </div>

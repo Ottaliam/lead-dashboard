@@ -155,6 +155,7 @@ body {
   padding: 0;
 }
 
+/* Footer Styles */
 .app-footer {
   background: #1e293b;
   color: white;
@@ -167,6 +168,57 @@ body {
   margin: 8px 0;
   font-size: 0.9rem;
   opacity: 0.8;
+}
+
+/* Tips Callout in Footer */
+.footer-tips-callout {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border-radius: 12px;
+  padding: 25px 30px;
+  margin: 0 auto 25px auto;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tips-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.footer-tips-callout h3 {
+  font-size: 1.3rem;
+  margin: 0 0 12px 0;
+  color: white;
+  font-weight: 700;
+}
+
+.footer-tips-callout p {
+  font-size: 1rem;
+  margin: 8px 0;
+  opacity: 1;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.5;
+}
+
+.footer-tips-callout a {
+  color: #fde047;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-tips-callout a:hover {
+  text-decoration: underline;
+  color: #fef08a;
+}
+
+.tips-secondary {
+  font-size: 0.95rem !important;
+  margin-top: 15px !important;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85) !important;
 }
 
 /* Responsive Design */
@@ -217,6 +269,19 @@ body {
   .tab-label {
     display: none;
   }
+  
+  .footer-tips-callout {
+    padding: 20px;
+    margin: 0 10px 20px 10px;
+  }
+  
+  .footer-tips-callout h3 {
+    font-size: 1.1rem;
+  }
+  
+  .footer-tips-callout p {
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -238,5 +303,9 @@ body {
   
   .header-content p {
     font-size: 0.9rem;
+  }
+  
+  .tips-icon {
+    font-size: 1.5rem;
   }
 }

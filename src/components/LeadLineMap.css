@@ -107,28 +107,13 @@
   color: #4b5563;
 }
 
-/* EPA Link Styling */
-.epa-link {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid #e2e8f0;
-}
-
-.epa-link-button {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #0284c7;
-  color: white !important;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 13px;
-  transition: background-color 0.2s;
-}
-
-.epa-link-button:hover {
-  background-color: #0369a1;
-  text-decoration: none;
+/* Flint special note in popup */
+.flint-popup-note {
+  background: #eff6ff !important;
+  border: 1px solid #3b82f6 !important;
+  color: #1e40af !important;
+  font-size: 12px !important;
+  line-height: 1.4;
 }
 
 /* Legend */

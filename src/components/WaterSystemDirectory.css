@@ -295,10 +295,12 @@
   background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
 }
 
+/* Compliant: Lighter green */
 .card-header.status-compliant {
-  background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+  background: linear-gradient(135deg, #16a34a 0%, #4ade80 100%);
 }
 
+/* 100% replaced: Darker emerald */
 .card-header.status-complete {
   background: linear-gradient(135deg, #047857 0%, #059669 100%);
 }
@@ -344,6 +346,33 @@
 /* Card Body */
 .card-body {
   padding: 20px;
+}
+
+/* Flint Special Note */
+.flint-note {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid #3b82f6;
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.flint-note-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.flint-note p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #1e40af;
+  line-height: 1.4;
+  font-weight: 500;
 }
 
 .stat-row {
@@ -481,7 +510,7 @@
   padding-top: 15px;
   border-top: 1px solid #f1f5f9;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -489,23 +518,6 @@
   font-size: 0.8rem;
   color: #94a3b8;
   font-family: monospace;
-}
-
-.epa-link-button {
-  display: inline-block;
-  padding: 8px 14px;
-  background-color: #0284c7;
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  transition: background-color 0.2s;
-}
-
-.epa-link-button:hover {
-  background-color: #0369a1;
-  text-decoration: none;
 }
 
 /* No Results */
