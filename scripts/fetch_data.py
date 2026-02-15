@@ -2,7 +2,10 @@ import hashlib
 import json
 import os
 import shutil
+from urllib.parse import urljoin, urlparse
+
 import requests
+from bs4 import BeautifulSoup
 from datetime import datetime
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
@@ -121,13 +124,41 @@ def fetch_socrata_api():
     return all_resp.json()
 
 
+def _is_xlsx_href(href):
+    """Check if href points to an xlsx file (ignoring query params like ?rev=...)."""
+    path = urlparse(href).path
+    return path.lower().endswith(".xlsx")
+
+
 def fetch_dsmi_inventories():
     """
     Fetch DSMI Inventories file.
-    Raises on HTTP error.
+    Visits the DSMI page and finds the xlsx link, then fetches it.
+    Requires exactly one xlsx link; raises if none or multiple found.
+    Raises on HTTP error or if no xlsx link found.
     """
-    url = "https://www.michigan.gov/egle/-/media/Project/Websites/egle/Documents/Programs/DWEHD/Community-Water-Supply/Lead-Copper/DSMI-Service-Line-Materials-Estimates.xlsx"
-    response = requests.get(url, timeout=30)
+    page_url = "https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health/community-water-supply/lead-and-copper-rule/dsmi-inventories"
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; DataMonitor/1.0; +https://planetdetroit.org)"}
+    page_resp = requests.get(page_url, headers=headers, timeout=30)
+    page_resp.raise_for_status()
+
+    soup = BeautifulSoup(page_resp.text, "html.parser")
+    xlsx_links = []
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        if _is_xlsx_href(href):
+            xlsx_links.append(href)
+
+    if not xlsx_links:
+        raise ValueError("No xlsx file link found on DSMI inventories page")
+
+    if len(xlsx_links) > 1:
+        raise ValueError(
+            f"Multiple xlsx links found on DSMI inventories page ({len(xlsx_links)}), skipping fetch: {xlsx_links}"
+        )
+
+    xlsx_url = urljoin(page_url, xlsx_links[0])
+    response = requests.get(xlsx_url, timeout=30)
     response.raise_for_status()
     path = os.path.join(DATA_DIR, "DSMI-Service-Line-Materials-Estimates.xlsx")
     with open(path, "wb") as f:
@@ -137,10 +168,32 @@ def fetch_dsmi_inventories():
 def fetch_lead_copper_rule():
     """
     Fetch Lead & Copper Rule data file.
+    Visits the LSLR page and finds the xlsx link, then fetches it.
+    Requires exactly one xlsx link; raises if none or multiple found.
     Raises on HTTP error.
     """
-    url = "https://www.michigan.gov/egle/-/media/Project/Websites/egle/Documents/Programs/DWEHD/Community-Water-Supply/Lead-Copper/2024-2025-LSLR-Data.xlsx"
-    response = requests.get(url, timeout=30)
+    page_url = "https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health/community-water-supply/lead-and-copper-rule/lslr-progress"
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; DataMonitor/1.0; +https://planetdetroit.org)"}
+    page_resp = requests.get(page_url, headers=headers, timeout=30)
+    page_resp.raise_for_status()
+
+    soup = BeautifulSoup(page_resp.text, "html.parser")
+    xlsx_links = []
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        if _is_xlsx_href(href):
+            xlsx_links.append(href)
+
+    if not xlsx_links:
+        raise ValueError("No xlsx file link found on LSLR progress page")
+
+    if len(xlsx_links) > 1:
+        raise ValueError(
+            f"Multiple xlsx links found on LSLR progress page ({len(xlsx_links)}), skipping fetch: {xlsx_links}"
+        )
+
+    xlsx_url = urljoin(page_url, xlsx_links[0])
+    response = requests.get(xlsx_url, timeout=30)
     response.raise_for_status()
     path = os.path.join(DATA_DIR, "2024-2025-LSLR-Data.xlsx")
     with open(path, "wb") as f:
@@ -172,7 +225,7 @@ def main():
     try:
         print("[2/3] Fetching DSMI Inventories...")
         fetch_dsmi_inventories()
-    except (requests.RequestException, json.JSONDecodeError) as e:
+    except (requests.RequestException, json.JSONDecodeError, ValueError) as e:
         print(f"  ✗ Failed: {e}")
         fetch_errors.append({"source": "dsmi", "name": SOURCE_NAMES["dsmi"], "error": str(e)})
 
@@ -180,7 +233,7 @@ def main():
     try:
         print("[3/3] Fetching Lead & Copper Rule...")
         fetch_lead_copper_rule()
-    except (requests.RequestException, json.JSONDecodeError) as e:
+    except (requests.RequestException, json.JSONDecodeError, ValueError) as e:
         print(f"  ✗ Failed: {e}")
         fetch_errors.append({"source": "lslr", "name": SOURCE_NAMES["lslr"], "error": str(e)})
 
