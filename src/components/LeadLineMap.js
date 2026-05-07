@@ -24,11 +24,12 @@ const STATUS_DISPLAY_LABEL = {
 
 const getStatusLabel = (status) => STATUS_DISPLAY_LABEL[status] || status;
 
-// Michigan bounding box — prevents the user from panning outside the state.
+// Michigan bounding box — gives enough padding around the state so popups
+// near the edges don't get cropped and users can pan to center any system.
 // Coordinates: [SW corner, NE corner]
 const MICHIGAN_BOUNDS = [
-  [41.6, -90.5],  // Southwest — below the Indiana/Ohio border, past Wisconsin
-  [48.4, -82.1],  // Northeast — Upper Peninsula tip, Lake Superior shore
+  [40.8, -92.0],  // Southwest — extra padding past Indiana/Ohio/Wisconsin
+  [49.2, -79.5],  // Northeast — extra padding past Upper Peninsula
 ];
 
 function LeadLineMap() {
@@ -116,7 +117,7 @@ function LeadLineMap() {
         zoom={7}
         minZoom={6}
         maxBounds={MICHIGAN_BOUNDS}
-        maxBoundsViscosity={1.0}
+        maxBoundsViscosity={0.7}
         style={{ height: '600px', width: '100%' }}
         scrollWheelZoom={true}
       >
